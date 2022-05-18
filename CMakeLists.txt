@@ -3,7 +3,7 @@ project(libwav_example C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(libwav_example main.c wavUtils.c)
+add_executable(libwav_example main.c wavUtils.c outputStrings.h)
 
 find_library(yalibwav libyalibwav.so)
 message(STATUS ${yalibwav})

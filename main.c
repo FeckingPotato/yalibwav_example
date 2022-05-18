@@ -3,29 +3,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include "wavUtils.h"
-
-char help[] = "Commands: \n"
-              "compress - dynamic range compression\n"
-              "amplify - amplification\n"
-              "echo - echo effect\n"
-              "reverb - reverb effect\n"
-              "For more detailed description use a command without arguments\n";
+#include "outputStrings.h"
 
 int main(int argc, char **argv) {
     if (argc < 2 || argc > 7) {
-        printf("%s", help);
+        printf("%s", HELP);
         return 0;
     }
     WAV wav;
     FILE *file;
     if (!strcmp(argv[1], "compress")) {
         if (argc != 6) {
-            printf("compress <input file> <output file> <threshold (0-32767)> <ratio (х:1)>\n");
+            printf("%s", HELP_COMPRESS);
             return 0;
         }
         file = fopen(argv[2], "r");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the input file\n");
+            fprintf(stderr, ERR_INPUT);
             return -1;
         }
         checkStatus(wavFileRead(file, &wav));
@@ -33,11 +27,11 @@ int main(int argc, char **argv) {
         unsigned short threshold = strtol(argv[4], NULL, 10);
         double ratio = strtod(argv[5], NULL);
         if(compression(&wav, threshold, ratio)) {
-            printf("WARNING: Current parameters caused an integer overflow, the sound may be distorted\n");
+            printf("%s", WARN_OVERFLOW);
         }
         file = fopen(argv[3], "w");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the output file\n");
+            fprintf(stderr, ERR_OUTPUT);
             return -2;
         }
         wavFileWrite(file, wav);
@@ -45,12 +39,12 @@ int main(int argc, char **argv) {
     }
     if (!strcmp(argv[1], "amplify")) {
         if (argc != 6) {
-            printf("amplify <input file> <output file> <threshold (0-32767)> <ratio (х:1)>\n");
+            printf("%s", HELP_AMPLIFY);
             return 0;
         }
         file = fopen(argv[2], "r");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the input file\n");
+            fprintf(stderr, ERR_INPUT);
             return -1;
         }
         checkStatus(wavFileRead(file, &wav));
@@ -58,24 +52,24 @@ int main(int argc, char **argv) {
         unsigned short threshold = strtol(argv[4], NULL, 10);
         double ratio = strtod(argv[5], NULL);
         if(amplification(&wav, threshold, ratio)) {
-            printf("WARNING: Current parameters caused an integer overflow, the sound may be distorted\n");
+            printf(WARN_OVERFLOW);
         }
         file = fopen(argv[3], "w");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the output file\n");
+            fprintf(stderr, ERR_INPUT);
             return -2;
         }
         wavFileWrite(file, wav);
         return 0;
     }
     if (!strcmp(argv[1], "echo")) {
-        if (argc != 6) {
-            printf("echo <input file> <output file> <delay (ms)> <input gain> <decay>\n");
+        if (argc != 7) {
+            printf("%s", HELP_ECHO);
             return 0;
         }
         file = fopen(argv[2], "r");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the input file\n");
+            fprintf(stderr, ERR_INPUT);
             return -1;
         }
         checkStatus(wavFileRead(file, &wav));
@@ -83,11 +77,11 @@ int main(int argc, char **argv) {
         double delay = strtod(argv[4], NULL);
         double decay = strtod(argv[5], NULL);
         if(echo(&wav, delay, decay)) {
-            printf("WARNING: Current parameters caused an integer overflow, the sound may be distorted\n");
+            printf(WARN_OVERFLOW);
         }
         file = fopen(argv[3], "w");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the output file\n");
+            fprintf(stderr, ERR_OUTPUT);
             return -2;
         }
         wavFileWrite(file, wav);
@@ -95,12 +89,12 @@ int main(int argc, char **argv) {
     }
     if (!strcmp(argv[1], "reverb")) {
         if (argc != 7) {
-            printf("reverb <input file> <output file> <delay (ms)> <dry gain> <wet gain>\n");
+            printf("%s", HELP_REVERB);
             return 0;
         }
         file = fopen(argv[2], "r");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the input file\n");
+            fprintf(stderr, ERR_INPUT);
             return -1;
         }
         checkStatus(wavFileRead(file, &wav));
@@ -109,16 +103,16 @@ int main(int argc, char **argv) {
         double dry_gain = strtod(argv[5], NULL);
         double wet_gain = strtod(argv[6], NULL);
         if(reverb(&wav, delay, dry_gain, wet_gain)) {
-            printf("WARNING: Current parameters caused an integer overflow, the sound may be distorted\n");
+            printf(WARN_OVERFLOW);
         }
         file = fopen(argv[3], "w");
         if (file == NULL) {
-            fprintf(stderr, "Unable to open the output file\n");
+            fprintf(stderr, ERR_OUTPUT);
             return -2;
         }
         wavFileWrite(file, wav);
         return 0;
     }
-    printf("%s", help);
+    printf("%s", HELP);
     return 0;
 }

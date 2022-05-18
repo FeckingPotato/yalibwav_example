@@ -1,5 +1,5 @@
-#ifndef KURS_WAV_WAVUTILS_H
-#define KURS_WAV_WAVUTILS_H
+#ifndef LIBWAV_EXAMPLE_WAVUTILS_H
+#define LIBWAV_EXAMPLE_WAVUTILS_H
 
 void checkStatus(unsigned short statusCode);
 int compression(WAV *input, unsigned short threshold, double ratio);
