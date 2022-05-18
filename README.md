@@ -5,7 +5,5 @@ An example (not really well written) program which uses [this](https://github.co
 ## Commands and arguments
 - `compress <threshold (0-32767)> <ratio (х:1)>` - dynamic range compression
 - `amplify <threshold (0-32767)> <ratio (х:1)>` - amplification
-- `echo <delay (ms)> <decay (<1) >` - echo effect
-- `echo <delay (ms)> <decay (<1) >` - reverb effect
-
-There is no overflow check, so use last three effects carefully
+- `echo <delay (ms)> <input gain> <decay>` - echo effect
+- `echo <delay (ms)> <dry gain> <wet gain>` - reverb effect

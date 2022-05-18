@@ -1,9 +1,10 @@
 #ifndef KURS_WAV_WAVUTILS_H
 #define KURS_WAV_WAVUTILS_H
+
 void checkStatus(unsigned short statusCode);
-WAV compression(WAV input, unsigned short threshold, double ratio);
-WAV amplification(WAV input, unsigned short threshold, double ratio);
-WAV echo(WAV input, double delayms, double decay);
-WAV reverb(WAV input, double delayms, double decay);
+int compression(WAV *input, unsigned short threshold, double ratio);
+int amplification(WAV *input, unsigned short threshold, double ratio);
+int echo(WAV *input, double delayms, double decay);
+int reverb(WAV *input, double delayms, double dry_gain, double wet_gain);
 
 #endif
