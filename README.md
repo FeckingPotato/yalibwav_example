@@ -6,4 +6,4 @@ An example (not really well written) program which uses [this](https://github.co
 - `compress <threshold (0-32767)> <ratio (х:1)>` - dynamic range compression
 - `amplify <threshold (0-32767)> <ratio (х:1)>` - amplification
 - `echo <delay (ms)> <input gain> <decay>` - echo effect
-- `echo <delay (ms)> <dry gain> <wet gain>` - reverb effect
+- `reverb <delay (ms)> <dry gain> <wet gain>` - reverb effect
